@@ -1,0 +1,13 @@
+.App {
+  display: grid;
+  grid-template-columns: repeat(3, 30vw);
+  grid-template-rows: 20vh;
+}
+
+.imagen {
+  max-width: 20vw;
+  max-height: 20vh;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
