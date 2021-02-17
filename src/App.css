@@ -2,6 +2,9 @@
   display: grid;
   grid-template-columns: repeat(3, 30vw);
   grid-template-rows: 20vh;
+  margin: auto;
+  width: 80%;
+  margin-top: 10vh;
 }
 
 .imagen {

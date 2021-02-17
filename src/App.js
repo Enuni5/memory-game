@@ -12,6 +12,7 @@ import quesocrema from '/Users/Emilio/projects/memory-game/src/img/queso crema.p
 import quesobatido from '/Users/Emilio/projects/memory-game/src/img/Queso-Fresco-Batido.png';
 import azucarmoreno from '/Users/Emilio/projects/memory-game/src/img/azucar-moreno.png';
 import _ from 'lodash';
+// import ScoreBoard from '/Users/Emilio/projects/memory-game/src/Components/Scoreboard.js';
 
 function App() {
   const [ingredients, setIngredients] = useState([
@@ -87,25 +88,32 @@ function App() {
 
   useEffect(() => {
     let ingredientsToShow = _.sampleSize(ingredients, 3);
-    if (ingredientsToShow.some((ingredient) => ingredient.selected === false)) {
+    if (ingredients.some((ingredient) => ingredient.selected === false)) {
       while (
         ingredientsToShow.every((ingredient) => ingredient.selected === true)
       ) {
         ingredientsToShow = _.sampleSize(ingredients, 3);
-        console.log(ingredientsToShow);
       }
-      console.log(ingredientsToShow);
     } else if (
       ingredients.every((ingredient) => ingredient.selected === true)
     ) {
-      alert('You win');
+      alert('You won');
+      highScoreLogic();
+      winLogic(true);
+      return;
     }
     setShownIngredients(ingredientsToShow);
   }, [ingredients]);
 
   const changeIngredientStatus = (e) => {
+    addScore();
     ingredients.map((ingredient, index) => {
       if (e.target.alt === ingredient.ingredient) {
+        if (ingredient.selected === true) {
+          alert('You lose');
+          winLogic(false);
+          return null;
+        }
         const changedIngredients = [...ingredients];
         changedIngredients[index].selected = true;
         setIngredients(changedIngredients);
@@ -114,8 +122,43 @@ function App() {
     });
   };
 
+  const [scoreBoard, setScoreBoard] = useState(0);
+  const [highScore, setHighScore] = useState(0);
+
+  const addScore = () => {
+    setScoreBoard(scoreBoard + 1);
+  };
+
+  const highScoreLogic = () => {
+    setHighScore(() => (scoreBoard > highScore ? scoreBoard : highScore));
+  };
+
+  const gameOver = () => {
+    let changedIngredients = [...ingredients];
+    changedIngredients.map((ingredient) => {
+      ingredient.selected = false;
+      console.log(ingredient);
+    });
+    setIngredients(changedIngredients);
+    console.log(ingredients);
+  };
+
+  const winLogic = (win) => {
+    if (win) {
+      gameOver();
+    } else if (win === false) {
+      highScoreLogic();
+      setScoreBoard(0);
+      gameOver();
+    }
+  };
+
   return (
     <div className='App'>
+      <div className='scoreBoard'>
+        Current Score: {scoreBoard}
+        HighScore: {highScore}
+      </div>
       {shownIngredients.map((ingredient) => {
         return (
           <img
@@ -127,6 +170,7 @@ function App() {
           />
         );
       })}
+      {/* <ScoreBoard /> */}
     </div>
   );
 }
