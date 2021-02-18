@@ -142,10 +142,10 @@ function App() {
 
   const winLogic = (win) => {
     if (win) {
-      setWinStatus('🎉 You win 🎉');
+      setWinStatus('🎉 Yeah! Brownie Chessecake for dessert! 🎉');
       gameOver();
     } else if (win === false) {
-      setWinStatus('👎 Try again 👎');
+      setWinStatus(`😫 It's a total mess. No cake for you 🤢`);
       highScoreLogic();
       setScoreBoard(0);
       gameOver();
