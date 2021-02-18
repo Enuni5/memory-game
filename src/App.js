@@ -96,7 +96,6 @@ function App() {
     } else if (
       ingredients.every((ingredient) => ingredient.selected === true)
     ) {
-      highScoreLogic();
       winLogic(true);
       return;
     }
@@ -143,6 +142,8 @@ function App() {
   const winLogic = (win) => {
     if (win) {
       setWinStatus('🎉 Yeah! Brownie Chessecake for dessert! 🎉');
+      highScoreLogic();
+      setScoreBoard(0);
       gameOver();
     } else if (win === false) {
       setWinStatus(`😫 It's a total mess. No cake for you 🤢`);
