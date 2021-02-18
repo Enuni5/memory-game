@@ -12,7 +12,6 @@ import quesocrema from '/Users/Emilio/projects/memory-game/src/img/queso crema.p
 import quesobatido from '/Users/Emilio/projects/memory-game/src/img/Queso-Fresco-Batido.png';
 import azucarmoreno from '/Users/Emilio/projects/memory-game/src/img/azucar-moreno.png';
 import _ from 'lodash';
-// import ScoreBoard from '/Users/Emilio/projects/memory-game/src/Components/Scoreboard.js';
 
 function App() {
   const [ingredients, setIngredients] = useState([
@@ -97,7 +96,6 @@ function App() {
     } else if (
       ingredients.every((ingredient) => ingredient.selected === true)
     ) {
-      alert('You won');
       highScoreLogic();
       winLogic(true);
       return;
@@ -110,7 +108,6 @@ function App() {
     ingredients.map((ingredient, index) => {
       if (e.target.alt === ingredient.ingredient) {
         if (ingredient.selected === true) {
-          alert('You lose');
           winLogic(false);
           return null;
         }
@@ -137,16 +134,18 @@ function App() {
     let changedIngredients = [...ingredients];
     changedIngredients.map((ingredient) => {
       ingredient.selected = false;
-      console.log(ingredient);
     });
     setIngredients(changedIngredients);
-    console.log(ingredients);
   };
+
+  const [winStatus, setWinStatus] = useState('');
 
   const winLogic = (win) => {
     if (win) {
+      setWinStatus('🎉 You win 🎉');
       gameOver();
     } else if (win === false) {
+      setWinStatus('👎 Try again 👎');
       highScoreLogic();
       setScoreBoard(0);
       gameOver();
@@ -155,22 +154,28 @@ function App() {
 
   return (
     <div className='App'>
+      <h1 className='title'>The 🤎 Brownie Chessecake 🤍 Memory Game</h1>
+      <h3>
+        🧠 Remember every ingredient of this <s>stateful</s> tasteful dessert 😋
+      </h3>
       <div className='scoreBoard'>
-        Current Score: {scoreBoard}
-        HighScore: {highScore}
+        <h4>Current Score: {scoreBoard}</h4>
+        <h4>{winStatus}</h4>
+        <h4>High Score: {highScore}</h4>
       </div>
-      {shownIngredients.map((ingredient) => {
-        return (
-          <img
-            key={ingredient.id}
-            src={ingredient.src}
-            className='imagen'
-            alt={ingredient.ingredient}
-            onClick={changeIngredientStatus}
-          />
-        );
-      })}
-      {/* <ScoreBoard /> */}
+      <div className='ingredient-container'>
+        {shownIngredients.map((ingredient) => {
+          return (
+            <img
+              key={ingredient.id}
+              src={ingredient.src}
+              className='imagen'
+              alt={ingredient.ingredient}
+              onClick={changeIngredientStatus}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }

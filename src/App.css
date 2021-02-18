@@ -1,4 +1,34 @@
 .App {
+  background-image: linear-gradient(rgb(92, 55, 8), white);
+  height: fit-content;
+}
+
+.title {
+  width: 80%;
+  text-align: center;
+  margin: auto;
+  padding-top: 10vh;
+}
+
+h3 {
+  text-align: center;
+  width: 80%;
+  margin: auto;
+}
+
+.scoreBoard {
+  display: flex;
+  margin-top: 5vh;
+  justify-content: center;
+}
+
+h4 {
+  text-align: center;
+  width: 50%;
+  margin: auto;
+}
+
+.ingredient-container {
   display: grid;
   grid-template-columns: repeat(3, 30vw);
   grid-template-rows: 20vh;
